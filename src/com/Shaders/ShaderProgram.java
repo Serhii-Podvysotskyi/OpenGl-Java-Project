@@ -90,9 +90,17 @@ public abstract class ShaderProgram {
     }
 
     private static int load_shader(String file, int type) throws Exception {
+        switch (type) {
+            case GL20.GL_VERTEX_SHADER:
+                file += ".vs";
+                break;
+            case GL20.GL_FRAGMENT_SHADER:
+                file += ".fs";
+                break;
+        }
         StringBuilder shader_source = new StringBuilder();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+            BufferedReader reader = new BufferedReader(new FileReader("res/" + file));
             String line = reader.readLine();
             while (line != null) {
                 shader_source.append(line).append("\n");

@@ -1,7 +1,9 @@
 package com.RenderEngine;
 
-import org.lwjgl.opengl.GL;
+import com.Models.RawModel;
+import com.Models.TexturedModel;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
@@ -24,6 +26,19 @@ public class Renderer {
         GL20.glEnableVertexAttribArray(0); // Enable vbo
         GL11.glDrawElements(GL11.GL_TRIANGLES, model.get_vertex_count(), GL11.GL_UNSIGNED_INT, 0);// Draw triangles
         GL20.glDisableVertexAttribArray(0); // Disable vbo
+        GL30.glBindVertexArray(0); // Unbind vector array
+    }
+
+    public void render(TexturedModel textured_model) {
+        RawModel model = textured_model.get_raw_model(); // Get raw model
+        GL30.glBindVertexArray(model.get_vertex_attribute_object_id()); // Bind vbo
+        GL20.glEnableVertexAttribArray(0); // Enable attribute
+        GL20.glEnableVertexAttribArray(1); // Enable attribute
+        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textured_model.get_texture_id());
+        GL11.glDrawElements(GL11.GL_TRIANGLES, model.get_vertex_count(), GL11.GL_UNSIGNED_INT, 0);// Draw triangles
+        GL20.glDisableVertexAttribArray(0); // Disable attribute
+        GL20.glDisableVertexAttribArray(1); // Disable attribute
         GL30.glBindVertexArray(0); // Unbind vector array
     }
 }

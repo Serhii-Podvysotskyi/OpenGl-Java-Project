@@ -1,11 +1,15 @@
 package com.Engine;
 
+import com.Models.TexturedModel;
 import com.RenderEngine.DisplayManager;
 import com.RenderEngine.Loader;
-import com.RenderEngine.RawModel;
+import com.Models.RawModel;
 import com.RenderEngine.Renderer;
 
+import com.Shaders.ShaderProgram;
 import com.Shaders.StaticShader;
+import com.Shaders.TextureShader;
+import com.Textures.ModelTexture;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL;
 
@@ -51,7 +55,8 @@ public class GameEngine {
             // GAME : Code
             Loader loader = new Loader();
             Renderer renderer = new Renderer();
-            StaticShader shader = new StaticShader();
+            //ShaderProgram shader = new StaticShader();
+            ShaderProgram shader = new TextureShader();
             float[] vertices = {
                     -0.5f, 0.5f, 0f,
                     -0.5f, -0.5f, 0f,
@@ -62,12 +67,21 @@ public class GameEngine {
                     0, 1, 3,
                     3, 1, 2
             };
-            RawModel model = loader.load_to_vao(vertices, indices); // Create RAW model
+            float[] texture_coords = {
+                    0, 0,
+                    0, 1,
+                    1, 1,
+                    1, 0
+            };
+            //RawModel model = loader.load_model(vertices, indices); // Create RAW model
+            RawModel model = loader.load_model(vertices, texture_coords, indices); // Create Raw model
+            ModelTexture texture = new ModelTexture(loader.load_texture_2("textures/img1"));
+            TexturedModel textured_model = new TexturedModel(model, texture);
             // Run game loop
             while (!glfwWindowShouldClose(DisplayManager.get_window_handle())) {
                 renderer.render(); // Init renderer
                 shader.start();
-                renderer.render(model); // Render model
+                renderer.render(textured_model); // Render model
                 shader.stop();
                 DisplayManager.update_display(); // Update display
             }
