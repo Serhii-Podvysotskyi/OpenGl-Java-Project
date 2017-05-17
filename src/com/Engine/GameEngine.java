@@ -6,8 +6,6 @@ import com.RenderEngine.Loader;
 import com.Models.RawModel;
 import com.RenderEngine.Renderer;
 
-import com.Shaders.ShaderProgram;
-import com.Shaders.StaticShader;
 import com.Shaders.TextureShader;
 import com.Textures.ModelTexture;
 import org.lwjgl.glfw.*;
