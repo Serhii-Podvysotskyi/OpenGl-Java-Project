@@ -1,6 +1,7 @@
 package com.Graphic;
 
 import com.Core.toDelete;
+
 import org.joml.*;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
@@ -11,7 +12,6 @@ import java.nio.FloatBuffer;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.opengl.GL20.GL_LINK_STATUS;
-import static org.lwjgl.opengl.GL20.glUniformMatrix2fv;
 
 /**
  * Created by Sergey on 5/17/2017.
@@ -119,7 +119,7 @@ public class ShaderProgram implements toDelete {
             buffer.put(value.m01()).put(value.m11()).put(value.m21());
             buffer.put(value.m02()).put(value.m12()).put(value.m22());
             buffer.flip();
-            glUniformMatrix2fv(location, false, buffer);
+            GL20.glUniformMatrix3fv(location, false, buffer);
         }
     }
 
@@ -135,7 +135,7 @@ public class ShaderProgram implements toDelete {
             buffer.put(value.m02()).put(value.m12()).put(value.m22()).put(value.m32());
             buffer.put(value.m03()).put(value.m13()).put(value.m23()).put(value.m33());
             buffer.flip();
-            glUniformMatrix2fv(location, false, buffer);
+            GL20.glUniformMatrix4fv(location, false, buffer);
         }
     }
 
